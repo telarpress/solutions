@@ -1,7 +1,8 @@
 {
-    "name": "encore",
+    "name": "ts-ui",
     "description": "An adaptor to run Telar Social on Encore platform. Encore is the backend development engine built on the belief that escaping complexity unleashes a higher state of creativity.",
     "repositories": ["https://github.com/telarpress/telar-social-encore"],
     "config": "./config.yml",
-    "setup": "['npm install','node ./setup.js']"
+    "setup": "./setup.js",
+    "run": "./run.js"
 }

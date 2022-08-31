@@ -1,0 +1,8 @@
+{
+    "name": "ts-ui-encore",
+    "description": "Telar Social.",
+    "repositories": ["https://github.com/telarpress/telar-social-encore"],
+    "config": "./config.yml",
+    "setup": "./setup.js",
+    "run": "./run.js"
+}

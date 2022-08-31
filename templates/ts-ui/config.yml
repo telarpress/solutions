@@ -1,0 +1,34 @@
+secrets:
+  encore_auth_key: ""
+  admin_username: ""
+  admin_password: ""
+  mongo_host: ""
+  mongo_database: ""
+  ref_email_pass: ""
+  payload_secret: ""
+  github_client_secret: ""
+  recaptcha_secret: ""
+environment:
+  app_name: Telar Social
+  base_route_domain: ""
+  db_type: mongo
+  header_cookie_name: he
+  org_avatar: https://avatars3.githubusercontent.com/u/43268620
+  org_name: Telar
+  payload_cookie_name: pa
+  phone_source_number: "0123456"
+  read_timeout: 10s
+  recaptcha_site_key: 6LfXPboUAAAAAIQmwp8HVll7n7ZUpwNW1JL5RcoW
+  ref_email: no-reply@telar.dev
+  signature_cookie_name: si
+  smtp_email: smtp.zoho.com:587
+  auth_external_redirect_domain: https://social.telar.dev
+  auth_web_url: https://social.telar.dev
+  auth_web_uri: https://auth.telar.dev
+  github_client_id: 9a9cbbf3e0bce602384d
+  cookie_root_domain: .telar.dev
+  gateway: https://social.faas.telar.dev
+  internal_gateway: http://gateway.openfaas:8080/function
+  origin: "https://social.faas.telar.dev,https://social.telar.dev,https://auth.telar.dev"
+  websocket_server_url: https://ws.telar.dev
+  bucket_name: bucket.appspot.com
