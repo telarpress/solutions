@@ -1,0 +1,9 @@
+{
+    "name": "ts-ui",
+    "description": "Websocket server to handle realtime data like chat, notification and actions for Telar Social Engine.",
+    "repositories": [
+        "https://github.com/red-gold/ts-websocket"
+    ],
+    "setupCMD": "npm install",
+    "runFile": "npm run dev"
+}

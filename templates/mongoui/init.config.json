@@ -1,0 +1,9 @@
+{
+  "port": 63310,
+  "connectionList": [
+    {
+      "uri": "mongodb://127.0.0.1:40978/telar",
+      "name": "telar"
+    }
+  ]
+}

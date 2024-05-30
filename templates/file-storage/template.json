@@ -1,0 +1,8 @@
+{
+    "name": "file-storage",
+    "description": "File storage API",
+    "repositories": [],
+    "service": true,
+    "run": "file:./run.js",
+    "setup": "cmd:npm install"
+}

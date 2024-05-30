@@ -1,0 +1,8 @@
+{
+    "name": "ssl-proxy",
+    "description": "SSL proxy service",
+    "repositories": [],
+    "service": true,
+    "run": "file:./run.js",
+    "setup": "cmd:npm install"
+}

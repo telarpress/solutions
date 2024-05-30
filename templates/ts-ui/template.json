@@ -1,0 +1,12 @@
+{
+    "name": "ts-ui",
+    "description": "Open Source User Interface for Telar Social Engine",
+    "repositories": [
+        {
+            "name": "ts-ui",
+            "url": "https://github.com/red-gold/ts-ui"
+        }
+    ],
+    "setup": "file:setup.js",
+    "run": "file:run.js"
+}

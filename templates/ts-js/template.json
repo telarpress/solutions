@@ -1,0 +1,16 @@
+{
+    "name": "ts-js",
+    "description": "Telar Social Engine written in Javascript",
+    "repositories": [
+        {
+            "name": "telar-web-js",
+            "url": "https://github.com/telarpress/telar-web-js"
+        },
+        {
+            "name": "telar-social-js",
+            "url": "https://github.com/telarpress/telar-social-js"
+        }
+    ],
+    "setup": "file:setup.js",
+    "run": "file:run.js"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "in-memory-mongo",
+    "description": "Mongo DB in-memory",
+    "repositories": [],
+    "run": "file:./run.js",
+    "setup":"cmd:npm install",
+    "service": true
+}

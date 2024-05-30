@@ -1,0 +1,8 @@
+{
+    "name": "smtp",
+    "description": "SMTP service",
+    "repositories": [],
+    "service": true,
+    "run": "file:./run.js",
+    "setup": "cmd:npm install"
+}

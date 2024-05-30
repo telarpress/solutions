@@ -1,0 +1,7 @@
+{
+    "name": "mongoui",
+    "description": "A Web GUI to administer MongoDB.",
+    "repositories": [],
+    "setup": "cmd:npm install",
+    "run": "file:./run.js"
+}

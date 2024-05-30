@@ -1,0 +1,25 @@
+{
+    "port": 443,
+    "hosts": [
+        {
+            "domain": "solar.local",
+            "target": "http://localhost:3030",
+            "ws": "ws://localhost:3030"
+        },
+        {
+            "domain": "api.solar.local",
+            "target": "http://localhost:4000",
+            "ws": null
+        },
+        {
+            "domain": "mongodb.telar.local",
+            "target": "http://localhost:63310",
+            "ws": null
+        },
+        {
+            "domain": "mail.telar.local",
+            "target": "http://localhost:40998",
+            "ws": null
+        }
+    ]
+}
