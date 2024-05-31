@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { setEnvValue } from './helpers.js'
+import { createFile, setEnvValue } from './helpers.js'
 
 const serviceName = 'ts-js'
 async function run({config, rootPath, projectPath}, tBus) {
@@ -8,15 +8,16 @@ async function run({config, rootPath, projectPath}, tBus) {
   await npmInstall(path.join(projectPath, 'telar-social-js'),tBus)
   console.log('All node modules are installed.')
  // set .env file
- const uiDevEnvPath = path.join(path.join(projectPath, 'telar-web-js'), '.env')
- const devTsUiEnv = config.environment
- const devTsUiEnvPromises = []
- Object.keys(devTsUiEnv).forEach((key) => {
-     devTsUiEnvPromises.push(setEnvValue(uiDevEnvPath, key, devTsUiEnv[key]))
+ const devDotEnvPath = path.join(path.join(projectPath, 'telar-web-js'), '.env')
+ await createFile(devDotEnvPath)
+ const devDotEnv = config.environment
+ const devDotEnvPromises = []
+ Object.keys(devDotEnv).forEach((key) => {
+     devDotEnvPromises.push(setEnvValue(devDotEnvPath, key, devDotEnv[key]))
  })
 
 
- await Promise.all(devTsUiEnvPromises)
+ await Promise.all(devDotEnvPromises)
  tBus.resolve({  serviceName, log: "" });
 
 }

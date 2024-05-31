@@ -7,6 +7,19 @@ const readEnvVars = async (envFilePath) => {
     const data = await readFileAsync(envFilePath, 'utf-8')
     return data.split(os.EOL)
 }
+
+async function createFile(filePath) {
+    try {
+        // Check if the file exists
+        await fs.promises.access(filePath);
+        console.log(`${filePath} already exists.`);
+    } catch (error) {
+        // If the file does not exist, create it
+        await fs.promises.writeFile(filePath, '');
+        console.log(`${filePath} created successfully.`);
+    }
+}
+
 /**
  * Finds the key in .env files and returns the corresponding value
  *
@@ -176,4 +189,5 @@ export {
     copyFileAsync,
     mergeDeep,
     getRandomSecretKey,
+    createFile
 }
