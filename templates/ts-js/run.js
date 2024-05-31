@@ -11,7 +11,7 @@ async function yarnStart(projectPath, tBus) {
     const telarWebPath = path.join(projectPath, "telar-web-js");
     const telarSocialPath = path.join(projectPath, "telar-social-js", "micros");
     const worker = await tBus.exec(
-      `/Users/qolzam/projects/telar/telar-cli-js/bin/run.js run -d ${telarSocialPath}`,
+      `telar run -d ${telarSocialPath}`,
       {
         cwd: telarWebPath,
       }
