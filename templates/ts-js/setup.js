@@ -8,15 +8,15 @@ async function run({config, rootPath, projectPath}, tBus) {
   await npmInstall(path.join(projectPath, 'telar-social-js'),tBus)
   console.log('All node modules are installed.')
  // set .env file
-//  const uiDevEnvPath = path.join(rootPath, '.env')
-//  const devTsUiEnv = config.environment
-//  const devTsUiEnvPromises = []
-//  Object.keys(devTsUiEnv).forEach((key) => {
-//      devTsUiEnvPromises.push(setEnvValue(uiDevEnvPath, key, devTsUiEnv[key]))
-//  })
+ const uiDevEnvPath = path.join(path.join(projectPath, 'telar-web-js'), '.env')
+ const devTsUiEnv = config.environment
+ const devTsUiEnvPromises = []
+ Object.keys(devTsUiEnv).forEach((key) => {
+     devTsUiEnvPromises.push(setEnvValue(uiDevEnvPath, key, devTsUiEnv[key]))
+ })
 
 
-//  await Promise.all(devTsUiEnvPromises)
+ await Promise.all(devTsUiEnvPromises)
  tBus.resolve({  serviceName, log: "" });
 
 }

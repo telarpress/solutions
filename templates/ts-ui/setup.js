@@ -21,7 +21,6 @@ async function run({config, rootPath, projectPath}, tBus) {
 
 async function yarnInstall(uiPath, tBus) {
     return new Promise(async(resolve, reject) => {
-      console.log('YARN install in path ', uiPath)
         const worker = await tBus.exec('yarn install', {cwd: uiPath})
         worker.on('exit', (code, signal) => {
             if (Number(code) === 0 && signal === null) {
