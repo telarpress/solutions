@@ -2,11 +2,11 @@ import path from "node:path";
 
 const serviceName = "ts-js";
 async function run({ config, rootPath, projectPath }, tBus) {
-  await yarnStart(projectPath, tBus);
+  await startService(projectPath, tBus);
   tBus.resolve({ serviceName, log: "" });
 }
 
-async function yarnStart(projectPath, tBus) {
+async function startService(projectPath, tBus) {
   return new Promise(async (resolve, reject) => {
     const telarWebPath = path.join(projectPath, "telar-web-js");
     const telarSocialPath = path.join(projectPath, "telar-social-js", "micros");

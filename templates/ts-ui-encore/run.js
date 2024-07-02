@@ -1,169 +1,40 @@
-const { setEnvValue, writeFileAsync, readFileAsync } = require('./helpers')
-const path = require('node:path')
-const { exec } = require('node:child_process')
+import path from 'node:path'
+import { checkEncoreInstallation, checkGoInstallation, createEnvFile } from './helpers.js'
 
-/**
- * A handler for income message from Telar CLI
- * @param {*} action
- */
-async function processMessageHandler(action) {
-    switch (action.type) {
-        case 'service':
-            service(action.payload, action.meta)
-            break
-        case 'run':
-            await run(action.payload, action.meta)
-            break
-
-        default:
-            break
-    }
-    if (action.__id && process.send) {
-        process.send({ type: 'resolved', __id: action.__id })
-    }
+const serviceName = 'ts-ui-encore'
+async function run({config, rootPath, projectPath}, tBus) {
+if (await checkGoInstallation() === false) {
+    console.error('Golang is not installed.')
+    return
 }
-/**
- * Listen to Telar CLI command
- */
-// @ts-ignore
-process.on('message', processMessageHandler)
+if (await checkEncoreInstallation() === false) {
+    console.error('Encore is not installed.')
+    tBus.reject('Encore is not installed.')
+    return
+}
+  process.env["TELAR_ENV"] = "dev";
+  await encoreRun(path.join(projectPath, 'telar-social-encore'),tBus)
+  console.log('Running encore.')
+  
+ tBus.resolve({  serviceName, log: "" });
 
-process.on('SIGTERM', () => {
-    if (process.send) {
-        process.send({
-            type: 'close',
-        })
-    }
-})
-
-/**
- * Run solution
- */
-function run(payload, meta) {
-    return new Promise((resolve) => {
-        const { rootPath } = meta
-
-        console.log('Start running solution in ' + rootPath)
-        // run telar-social-encore
-        execProject('encore run', rootPath, 'telar-social-encore')
-
-        // run ts-ui
-        execProject('npm start', rootPath, 'ts-ui')
-        resolve(null)
-    })
 }
 
-/**
- *
- * @param {string} cmd execute command to run project
- * @param {*} rootPath parent project root directory
- * @param {*} projectName project name
- */
-function execProject(cmd, rootPath, projectName) {
-    const childProcess = exec(
-        cmd,
-        {
-            cwd: path.join(rootPath, projectName),
-        },
-        (err, stdout, stderr) => {
-            if (err) {
-                console.log(err)
-            } else if (stdout) {
-                console.log(stdout)
-            } else if (stderr) {
-                console.error(stderr)
+async function encoreRun(targetPath, tBus) {
+    return new Promise(async(resolve, reject) => {
+      console.log('encore run ', targetPath)
+        const worker = await tBus.exec('encore run', {cwd: targetPath})
+        worker.on('exit', (code, signal) => {
+            if (Number(code) === 0 && signal === null) {
+              resolve(code)
+            } else {
+              reject()
             }
-        }
-    )
-    if (childProcess.stdout) {
-        childProcess.stdout.on('data', (data) => {
-            console.log(` [${projectName}] ${String(data)}`)
-        })
-    }
-
-    childProcess.on('error', (err) => {
-        console.error(
-            ` [${projectName}] ${'\n\t\tERROR: spawn failed! (' + err + ')'}`
-        )
+          })
     })
 
-    if (childProcess.stderr) {
-        childProcess.stderr.on('data', (data) => {
-            console.error(` [${projectName}] [${String(data)}`)
-        })
-    }
-
-    childProcess.on('exit', (code, signal) => {
-        console.error(
-            ` [${projectName}] exit with code ${code} and signal ${signal} `
-        )
-    })
 }
 
-/**
- * Listen to services
- */
-async function service(payload, meta) {
-    const { rootPath } = meta
-    if (payload.serviceName === 'in-memory-mongo') {
-        const { uri, instance } = payload
-        await setEnvValue(
-            path.join(rootPath, 'telar-social-encore', 'config', '.env'),
-            'MongoHost',
-            uri
-        )
-        const mongouiConfigPath = path.join(
-            rootPath,
-            'templates',
-            'mongoui',
-            'config.json'
-        )
-        const mongouiConfig = await readMongouiConfig(mongouiConfigPath)
-        mongouiConfig.connectionList = [
-            {
-                uri: uri,
-                name: instance.dbName,
-            },
-        ]
-        writeMongouiConfig(
-            mongouiConfigPath,
-            JSON.stringify(mongouiConfig, null, 2)
-        )
-    }
-    if (payload.serviceName === 'smtp') {
-        const { port, host } = payload
-        const devConfigPath = path.join(
-            rootPath,
-            'telar-social-encore',
-            'config',
-            'config.development.json'
-        )
-        const devConfig = require(devConfigPath)
-        devConfig.environment.smtp_email = `${host}:${port}`
-        await writeFileAsync(devConfigPath, JSON.stringify(devConfig, null, 2))
-    }
-    if (payload.serviceName === 'file-storage') {
-        const { host } = payload
-        const devConfigPath = path.join(
-            rootPath,
-            'telar-social-encore',
-            'config',
-            'config.development.json'
-        )
-        const devConfig = require(devConfigPath)
-        devConfig.micros.storage.environment.proxy_balancer = host
-        await writeFileAsync(devConfigPath, JSON.stringify(devConfig, null, 2))
-    }
-}
+function stop() {
 
-async function readMongouiConfig(path) {
-    const configFile = await readFileAsync(path, { encoding: 'utf-8' })
-    const config = JSON.parse(configFile)
-    return config
 }
-
-function writeMongouiConfig(path, data) {
-    return writeFileAsync(path, data)
-}
-
-module.exports = run

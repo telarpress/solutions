@@ -1,5 +1,4 @@
 import { writeFile } from 'fs/promises';
-import path from 'path';
 
 /**
  * Converts a JSON object to a .env file format string.

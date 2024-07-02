@@ -1,7 +1,13 @@
 {
     "name": "ts-ui-encore",
-    "title": "Telar Social Engine",
+    "title": "Telar Social Engine using Encore",
     "description": "This is a scalable cloud native social engine. Whatever your creative idea or unique bussiness model, you can build it by Telar running on any public or private cloud.",
+    "repositories": [
+        {
+            "name": "telar-social-encore",
+            "url": "https://github.com/telarpress/telar-social-encore"
+        }
+    ],
     "setup": "file:setup.js",
     "run": "file:run.js"
 }
