@@ -140,13 +140,13 @@ class SSLProxyServer {
 
       // Extract the domain from the request
       const domain = this.getDomain(req.headers.host);
-      console.log(`Incoming request for domain: ${domain}`);
+      // console.log(`Incoming request for domain: ${domain}`);
 
       const hostConfig = this.matchDomains[domain];
       if (hostConfig) {
-        console.log(
-          `Matching domain found for ${domain}: forwarding to ${hostConfig.target}`
-        );
+        // console.log(
+        //   `Matching domain found for ${domain}: forwarding to ${hostConfig.target}`
+        // );
 
         // Forward the request to the correct target
         this.proxy.web(
